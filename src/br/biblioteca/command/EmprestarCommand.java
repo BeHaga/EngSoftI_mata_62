@@ -7,6 +7,8 @@ import br.biblioteca.entidade.Livro;
 public class EmprestarCommand implements Command {
     @Override
     public void executar(String[] args) {
+        System.out.println("DevolverCommand chamado!");
+        
         if (args.length < 2) {
             System.out.println("Uso: emp <usuario> <livro>");
             return;

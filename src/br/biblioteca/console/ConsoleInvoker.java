@@ -1,6 +1,6 @@
 package br.biblioteca.console;
 
-import br.bilioteca.command.Command;
+import br.biblioteca.command.Command;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,19 +24,19 @@ public class ConsoleInvoker {
                 break;
             }
             if (linha.isEmpty()) continue;
-        }
 
-        String[] partes = linha.split(" ");
-        String comandoChave = partes[0];
-        String[] args = new String[partes.length - 1];
-        System.arraycopy(partes, 1, args, 0, partes.length - 1);
+            String[] partes = linha.split(" ");
+            String comandoChave = partes[0];
+            String[] args = new String[partes.length - 1];
+            System.arraycopy(partes, 1, args, 0, partes.length - 1);
 
-        Command comando = comandos.get(comandoChave);
-        if (comando != null) {
-            comando.executar(args);
-        } else {
-            System.out.println("Comando desconhecido: " + comandoChave);
-        }
+            Command comando = comandos.get(comandoChave);
+            if (comando != null) {
+                comando.executar(args);
+            } else {
+                System.out.println("Comando desconhecido: " + comandoChave);
+            }
+        }        
         scanner.close();
     }
 }
