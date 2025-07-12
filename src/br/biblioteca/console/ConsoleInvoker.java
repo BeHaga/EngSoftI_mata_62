@@ -1,0 +1,42 @@
+package br.biblioteca.console;
+
+import br.bilioteca.command.Command;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ConsoleInvoker {
+
+    private Map<String, Command> comandos = new HashMap<>();
+
+    public void registrarComando(String chave, Command comando) {
+        comandos.put(chave, comando);
+    }
+
+    public void iniciar() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite um comando ou 'sair' para encerrar: ");
+
+        while (true) {
+            System.out.print("> ");
+            String linha = scanner.nextLine().trim();
+            if (linha.equalsIgnoreCase("sair")) {
+                break;
+            }
+            if (linha.isEmpty()) continue;
+        }
+
+        String[] partes = linha.split(" ");
+        String comandoChave = partes[0];
+        String[] args = new String[partes.length - 1];
+        System.arraycopy(partes, 1, args, 0, partes.length - 1);
+
+        Command comando = comandos.get(comandoChave);
+        if (comando != null) {
+            comando.executar(args);
+        } else {
+            System.out.println("Comando desconhecido: " + comandoChave);
+        }
+        scanner.close();
+    }
+}
