@@ -9,7 +9,11 @@ public class Main {
         ConsoleInvoker invoker = new ConsoleInvoker();
 
         invoker.registrarComando("emp", new EmprestarCommand());
-        //preciso lembrar de adicionar os demais comandos
+        invoker.registrarComando("dev", new DevolverCommand());
+        invoker.registrarComando("res", new ReservarCommand());
+        invoker.registrarComando("liv", new ConsultarLivroCommand());
+        invoker.registrarComando("usu", new ConsultarUsuarioCommand());
+        invoker.registrarComando("ntf", new ConsultarNotificacaoCommand());
 
         System.out.println("Funcionando!");
 
