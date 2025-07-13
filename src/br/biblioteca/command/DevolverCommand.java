@@ -5,6 +5,11 @@ public class DevolverCommand implements Command {
     @Override
     public void executar(String[] args) {
 
+        if (args.length < 2) {
+            System.out.println("Uso: emp <usuario> <livro>");
+            return;
+        }
+
         Repositorio repo = Repositorio.getInstancia();
         String codigoUsuario = args[0];
         String codigoLivro = args[1];
