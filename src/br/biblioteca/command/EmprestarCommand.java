@@ -1,8 +1,7 @@
 package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
-import br.biblioteca.entidade.Usuario;
-import br.biblioteca.entidade.Livro;
+import br.biblioteca.entidade.*;
 
 public class EmprestarCommand implements Command {
     @Override
@@ -19,18 +18,46 @@ public class EmprestarCommand implements Command {
 
         Repositorio repo = Repositorio.getInstancia();
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
-        Livro livro = repo.buscarLivroPorCodigo(codLivro);
-
         if (usuario == null) {
             System.out.println("Usuário não encontrado.");
             return;
         }
+
+        if (usuario.isDevedor()) {
+            System.out.println("Usuário possui empréstimos em atraso e não pode realizar novos empréstimos.");
+            return;
+        }
+
+        if (!usuario.podeEmprestar()) {
+            System.out.println("Usuário atingiu o limite de empréstimos");
+            return;
+        }
+
+        Livro livro = repo.buscarLivroPorCodigo(codLivro);
         if (livro == null) {
             System.out.println("Livro não encontrado.");
             return;
         }
 
-        //Ainda vou implementar a lógica de empréstimo e checagem de regras
-        //Tenho que lembrar que aqui tem que ter Strategy
+        Exemplar exemplarDisponivel = livro.getPrimeiroExemplarDisponivel();
+        if (exemplarDisponivel == null) {
+            System.out.println("Não há exemplares disponíveis deste livro para empréstimo.");
+            return;
+        }
+
+        Date hoje = new Date();
+        Date dataPrevistaDevolucao = Emprestimo.calcularDataPrevista(usuario, hoje);
+        Emprestimo emprestimo = new Emprestimo(usuario, exemplarDisponivel, hoje, dataPrevistaDevolucao);
+
+        exemplarDisponivel.setStatus(StatusExemplar.EMPRESTADO);
+        exemplarDisponivel.setEmprestimo(emprestimo);
+        usuario.adicionarEmprestimo(emprestimo);
+        repo.adicionarEmprestimo(emprestimo);
+
+        System.out.println("Empréstimo realizado com sucesso!");
+        System.out.println("Usuário: " + usuario.getNome());
+        System.out.println("Livro: " + livro.getTitulo());
+        System.out.println("Exemplar: " + exemplarDisponivel.getCodigo());
+        System.out.println("Data prevista de devolução: " + dataPrevistaDevolucao);
     }
 }
