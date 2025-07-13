@@ -2,6 +2,7 @@ package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
 import br.biblioteca.entidade.*;
+import java.util.Date;
 
 public class EmprestarCommand implements Command {
     @Override

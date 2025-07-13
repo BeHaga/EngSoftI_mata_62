@@ -1,4 +1,7 @@
 package br.biblioteca.command;
+
+import br.biblioteca.entidade.*;
+import br.biblioteca.repositorio.Repositorio;
 import java.util.List;
 
 public class DevolverCommand implements Command {
@@ -17,7 +20,7 @@ public class DevolverCommand implements Command {
         Usuario usuario = repo.buscarUsuarioPorCodigo(codigoUsuario);
         Livro livro = repo.buscarLivroPorCodigo(codigoLivro);
 
-        List <Emprestimo> emprestimos = usuario.getEmprestimos();
+        List <Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
 
         for (Emprestimo emprestimo : emprestimos) {
             

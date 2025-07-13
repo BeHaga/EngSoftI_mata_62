@@ -1,6 +1,8 @@
+package br.biblioteca.entidade;
+
 import java.util.Date;
 
-class Reserva {
+public class Reserva {
 
     private Usuario usuario;
     private Livro livro;

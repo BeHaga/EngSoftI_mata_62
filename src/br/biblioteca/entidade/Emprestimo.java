@@ -1,9 +1,11 @@
+package br.biblioteca.entidade;
+
 import java.util.Date;
 import java.util.Calendar;
 import br.biblioteca.entidade.Usuario;
 import br.biblioteca.entidade.TipoUsuario;
 
-class Emprestimo{
+public class Emprestimo{
 
     private Usuario usuario;
     private Exemplar exemplar;

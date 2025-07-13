@@ -1,9 +1,6 @@
-public enum StatusExemplar {
-    DISPONIVEL,
-    EMPRESTADO;
-}
+package br.biblioteca.entidade;
 
-public class Exemplar{
+public class Exemplar {
 
     private int codigo;
     private StatusExemplar status;
