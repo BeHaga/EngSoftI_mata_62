@@ -3,7 +3,7 @@ public enum StatusExemplar {
     EMPRESTADO;
 }
 
-class Exemplar{
+public class Exemplar{
 
     private int codigo;
     private StatusExemplar status;
@@ -38,6 +38,7 @@ class Exemplar{
         this.status = status;
     }
 
-
-
+    public void setEmprestimo(Emprestimo emprestimo) {
+        this.emprestimo = emprestimo;
+    }
 }

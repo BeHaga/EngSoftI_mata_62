@@ -1,19 +1,69 @@
 package br.biblioteca.entidade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Usuario {
     private String codigo;
+    private TipoUsuario tipoUsuario;
     private String nome;
+    private List<Emprestimo> emprestimosAtivos;
+    private List<Reserva> reservas;
 
-    public Usuario(String codigo, String nome) {
+    public Usuario(String codigo, TipoUsuario tipoUsuario, String nome) {
         this.codigo = codigo;
+        this.tipoUsuario = tipoUsuario;
         this.nome = nome;
+        this.emprestimosAtivos = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
     public String getCodigo() {
         return codigo;
     }
 
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public List<Emprestimo> getEmprestimosAtivos() {
+        return emprestimosAtivos;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void adicionarEmprestimo(Emprestimo e) {
+        emprestimosAtivos.add(e);
+    }
+
+    public void removerEmprestimo(Emprestimo e) {
+        emprestimosAtivos.remove(e);
+    }
+
+    public void removerReserva(Reserva r) {
+        reservas.remove(r);
+    }
+
+    public int getLimiteEmprestimos() {
+        switch (tipoUsuario) {
+            case ALUNO_GRADUCAO:
+                return 2;
+            case ALUNO_POS:
+                return 3;
+            case PROFESSOR:
+                return Integer.MAX_VALUE;
+            default:
+                return 0;
+        }
+    }
+
+    public boolean podeEmprestar() {
+        return emprestimosAtivos.size() < getLimiteEmprestimos();
     }
 }
