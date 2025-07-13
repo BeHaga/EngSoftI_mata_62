@@ -2,6 +2,8 @@ package br.biblioteca.command;
 
 import br.biblioteca.entidade.*;
 import br.biblioteca.repositorio.Repositorio;
+
+import java.util.Date;
 import java.util.List;
 
 public class DevolverCommand implements Command {
@@ -12,31 +14,51 @@ public class DevolverCommand implements Command {
             System.out.println("Uso: emp <usuario> <livro>");
             return;
         }
-
-        Repositorio repo = Repositorio.getInstancia();
         String codigoUsuario = args[0];
         String codigoLivro = args[1];
 
+        Repositorio repo = Repositorio.getInstancia();
         Usuario usuario = repo.buscarUsuarioPorCodigo(codigoUsuario);
+        if (usuario == null) {
+            System.out.println("Usuário não encontrado.");
+            return;
+        }
+
         Livro livro = repo.buscarLivroPorCodigo(codigoLivro);
+        if (livro == null) {
+            System.out.println("Livro não encontrado.");
+            return;
+        }
 
         List <Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
+        Emprestimo emprestimoParaDevolver = null;
 
         for (Emprestimo emprestado : emprestimos) {
             
-            if (emprestado.getExemplar().getLivro().equals(livro)) {
-
-                usuario.removerEmprestimo(emprestado);
-
-                emprestado.getExemplar().getLivro().devolverExemplar();
-
-                System.out.println("\nDevolução realizada: " + usuario.getNome() + " devolveu o livro: "+ livro.getTitulo());
-                
-                return;
+            if (emprestado.getExemplar().getLivro().equals(livro) && emprestado.getDataDevolucaoEfetiva() == null) {
+                emprestimoParaDevolver = emprestado;
+                break;
             }
         }
-    
-        System.out.println("Usuario não possui emprestimos em aberto para esse livro.");
-    
+
+        if (emprestimoParaDevolver == null) {
+            System.out.println("Nenhum empréstimo ativo deste livro encontrado.");
+            return;
+        }
+
+        Date hoje = new Date();
+        emprestimoParaDevolver.setDataDevolucaoEfetiva(hoje);
+
+        Exemplar exemplar = emprestimoParaDevolver.getExemplar();
+        exemplar.setStatus(StatusExemplar.DISPONIVEL);
+        exemplar.setEmprestimo(null);
+
+        usuario.removerEmprestimo(emprestimoParaDevolver);
+
+        System.out.println("Devolução realizada com sucesso!");
+        System.out.println("Usuário: " + usuario.getNome());
+        System.out.println("Livro: " + livro.getTitulo());
+        System.out.println("Exemplar: " + exemplar.getCodigo());
+        System.out.println("Data de devolução: " + hoje);    
     }
 }

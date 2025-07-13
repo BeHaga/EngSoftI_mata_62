@@ -2,6 +2,7 @@ package br.biblioteca;
 
 import br.biblioteca.console.ConsoleInvoker;
 import br.biblioteca.command.EmprestarCommand;
+import br.biblioteca.command.DevolverCommand;
 //preciso lembrar de adicionar o import dos demais commands
 
 public class Main {
@@ -9,7 +10,7 @@ public class Main {
         ConsoleInvoker invoker = new ConsoleInvoker();
 
         invoker.registrarComando("emp", new EmprestarCommand());
-        // invoker.registrarComando("dev", new DevolverCommand());
+        invoker.registrarComando("dev", new DevolverCommand());
         // invoker.registrarComando("res", new ReservarCommand());
         // invoker.registrarComando("liv", new ConsultarLivroCommand());
         // invoker.registrarComando("usu", new ConsultarUsuarioCommand());
