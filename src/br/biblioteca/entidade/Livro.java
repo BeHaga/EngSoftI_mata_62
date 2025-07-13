@@ -45,7 +45,7 @@ public class Livro {
     }
 
     public int getAnoPublicacao() {
-        return anoPublicacao
+        return anoPublicacao;
     }
 
     public List<Exemplar> getExemplares() {
@@ -61,7 +61,7 @@ public class Livro {
     }
 
     public void removerReserva(Reserva r) {
-        reservas.remove(e);
+        reservas.remove(r);
     }
 
     public boolean temExemplarDisponivel() {

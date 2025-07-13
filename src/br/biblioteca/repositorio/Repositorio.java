@@ -4,7 +4,6 @@ import br.biblioteca.entidade.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Repositorio {
     // Para acessar os dados do repositório preciso usar:
     // Repositorio repo = Repositorio.getInstancia();
@@ -12,9 +11,10 @@ public class Repositorio {
 
     private static Repositorio instancia;
 
-    private List<Usuario> usuarios = new ArrayList<>();
-    private List<Livro> livros = new ArrayList<>();
+    private List<Usuario> usuarios;
+    private List<Livro> livros;
     private List<Emprestimo> emprestimos;
+    private List<Reserva> reservas;
 
     // private List<Exemplar> exemplares = new ArrayList<>();
 
@@ -88,7 +88,7 @@ public class Repositorio {
     }
 
     public void adicionarEmprestimo(Emprestimo e) {
-        emprestimo.add(e);
+        emprestimos.add(e);
     }
 
     public List<Emprestimo> getEmprestimos() {

@@ -1,7 +1,7 @@
 package br.biblioteca.entidade;
 
 public enum TipoUsuario {
-    ALUNO_GRADUCAO,
+    ALUNO_GRADUACAO,
     ALUNO_POS,
     PROFESSOR
 }
