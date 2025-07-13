@@ -52,12 +52,24 @@ public class Livro {
         return exemplares;
     }
 
+    public int quantidadeExemplares(){
+        return this.exemplares.size();
+    }
+
     public List<Reserva> getReservas() {
         return reservas;
     }
 
+    public int quantidadeReservas(){
+        return this.reservas.size();
+    }
+
     public void adicionarExemplar(Exemplar e) {
         exemplares.add(e);
+    }
+
+    public void adicionarReserva(Reserva r) {
+      reservas.add(r);
     }
 
     public void removerReserva(Reserva r) {

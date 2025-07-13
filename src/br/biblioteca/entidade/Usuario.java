@@ -43,6 +43,10 @@ public class Usuario {
         emprestimosAtivos.add(e);
     }
 
+    public void adicionarReserva(Reserva r) {
+      reservas.add(r);
+    }
+
     public void removerReserva(Reserva r) {
         reservas.remove(r);
     }
@@ -78,10 +82,25 @@ public class Usuario {
         
         for (Emprestimo emprestimo : emprestimosAtivos){
             if (emprestimo.equals(emprestimoAntigo)){
-            this.emprestimosAtivos.remove(emprestimo);
-            emprestimoAntigo.setDataDevolucaoEfetiva(new Date());
-            return;
+                this.emprestimosAtivos.remove(emprestimo);
+                emprestimoAntigo.setDataDevolucaoEfetiva(new Date());
+                return;
+            }
         }
     }
+
+    public int quantidadeReservas(){
+        return this.reservas.size();
     }
+
+    public boolean temReserva(Livro livro){
+        for (Reserva r : reservas) {
+            if (r.getLivro().equals(livro)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
