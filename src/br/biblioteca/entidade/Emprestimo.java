@@ -1,4 +1,7 @@
 import java.util.Date;
+import java.util.Calendar;
+import br.biblioteca.entidade.Usuario;
+import br.biblioteca.entidade.TipoUsuario;
 
 class Emprestimo{
 
@@ -43,5 +46,26 @@ class Emprestimo{
         this.dataDevolucaoEfetiva = dataDevolucaoEfetiva;
     }
 
+    public static Date calcularDataPrevista(Usuario usuario, Date dataEmprestimo) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dataEmprestimo);
+
+        TipoUsuario tipo = usuario.getTipoUsuario();
+        switch (tipo) {
+            case ALUNO_GRADUACAO:
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                break;
+            case ALUNO_POS:                
+                calendar.add(Calendar.DAY_OF_MONTH, 10);
+                break;
+            case PROFESSOR:                
+                calendar.add(Calendar.DAY_OF_MONTH, 15);
+                break;
+            default:                
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+        }
+
+        return calendar.getTime();
+    }
 
 }
