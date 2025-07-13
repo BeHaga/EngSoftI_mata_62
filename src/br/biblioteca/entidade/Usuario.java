@@ -43,10 +43,6 @@ public class Usuario {
         emprestimosAtivos.add(e);
     }
 
-    public void removerEmprestimo(Emprestimo e) {
-        emprestimosAtivos.remove(e);
-    }
-
     public void removerReserva(Reserva r) {
         reservas.remove(r);
     }
@@ -76,5 +72,16 @@ public class Usuario {
             }
         }
         return false;
+    }
+
+    public void removerEmprestimo(Emprestimo emprestimoAntigo){
+        
+        for (Emprestimo emprestimo : emprestimosAtivos){
+            if (emprestimo.equals(emprestimoAntigo)){
+            this.emprestimosAtivos.remove(emprestimo);
+            emprestimoAntigo.setDataDevolucaoEfetiva(new Date());
+            return;
+        }
+    }
     }
 }

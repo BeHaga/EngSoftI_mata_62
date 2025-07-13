@@ -22,11 +22,13 @@ public class DevolverCommand implements Command {
 
         List <Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
 
-        for (Emprestimo emprestimo : emprestimos) {
+        for (Emprestimo emprestado : emprestimos) {
             
-            if (emprestimo.getExemplar().getLivro().equals(livro)) {
+            if (emprestado.getExemplar().getLivro().equals(livro)) {
 
-                //Falta a logica de devolver nas classes usuario e emprestimo
+                usuario.removerEmprestimo(emprestado);
+
+                emprestado.getExemplar().getLivro().devolverExemplar();
 
                 System.out.println("\nDevolução realizada: " + usuario.getNome() + " devolveu o livro: "+ livro.getTitulo());
                 

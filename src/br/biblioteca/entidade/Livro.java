@@ -81,4 +81,17 @@ public class Livro {
         }
         return null;
     }
+
+    public void devolverExemplar(){
+        for (Exemplar exemplar : exemplares) {
+
+            if (!exemplar.isDisponivel()) {
+                exemplar.devolver();
+                break;
+            }
+        }
+    }
+
+
+
 }

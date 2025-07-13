@@ -35,7 +35,16 @@ public class Exemplar {
         this.status = status;
     }
 
-    public void setEmprestimo(Emprestimo emprestimo) {
+    public void setEmprestimo(Emprestimo emprestimo){
         this.emprestimo = emprestimo;
+    }
+
+
+    public void devolver(){
+        this.emprestimo=null;
+    }
+
+    public boolean isDisponivel() {
+        return emprestimo == null;
     }
 }
