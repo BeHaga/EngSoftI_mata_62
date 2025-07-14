@@ -5,7 +5,6 @@ import br.biblioteca.command.Command;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ConsoleInvoker {
 
@@ -18,12 +17,12 @@ public class ConsoleInvoker {
     }
 
     public void iniciar() {
-        Scanner scanner = new Scanner(System.in);
+
         console.mostrarMensagem("Digite um comando ou 'sair' para encerrar: ");
 
         while (true) {
             System.out.print("> ");
-            String linha = scanner.nextLine().trim();
+            String linha = console.lerComando().trim();
             if (linha.equalsIgnoreCase("sair")) {
                 break;
             }
@@ -41,6 +40,5 @@ public class ConsoleInvoker {
                 console.mostrarMensagem("Comando desconhecido: " + comandoChave);
             }
         }        
-        scanner.close();
     }
 }
