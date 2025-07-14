@@ -25,6 +25,7 @@ public class EmprestarCommand implements Command {
         }
 
         if (usuario.isDevedor()) {
+            usuario.adicionarNotificacao("Você possui empréstimos em atraso. Regularize para realizar novos empréstimos.");
             System.out.println("Usuário possui empréstimos em atraso e não pode realizar novos empréstimos.");
             return;
         }

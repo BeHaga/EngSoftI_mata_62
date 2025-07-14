@@ -30,7 +30,7 @@ public class DevolverCommand implements Command {
             return;
         }
 
-        List <Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
+        List<Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
         Emprestimo emprestimoParaDevolver = null;
 
         for (Emprestimo emprestado : emprestimos) {
@@ -60,5 +60,12 @@ public class DevolverCommand implements Command {
         System.out.println("Livro: " + livro.getTitulo());
         System.out.println("Exemplar: " + exemplar.getCodigo());
         System.out.println("Data de devolução: " + hoje);    
+
+        List<Reserva> reservas = livro.getReservas();
+        if (!reservas.isEmpty()) {
+            Reserva proximaReserva = reservas.get(0);
+            Usuario usuarioReservante = proximaReserva.getUsuario();
+            usuarioReservante.adicionarNotificacao("O livro '" + livro.getTitulo() + "' está disponível para retirada.");
+        }
     }
 }

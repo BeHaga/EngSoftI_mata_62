@@ -46,6 +46,8 @@ public class ReservarCommand implements Command {
 
                 livro.adicionarReserva(reserva);
 
+                usuario.adicionarNotificacao("Reserva do livro '" + livro.getTitulo() + "'realizada com sucesso.");
+
                 System.out.println("Reserva realizada com sucesso!");
                 System.out.println("Usuário: " + usuario.getNome());
                 System.out.println("Livro: " + livro.getTitulo());

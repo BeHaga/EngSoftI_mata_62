@@ -10,6 +10,7 @@ public class Usuario {
     private String nome;
     private List<Emprestimo> emprestimosAtivos;
     private List<Reserva> reservas;
+    private List<String> notificacoes = new ArrayList<>();
 
     public Usuario(String codigo, TipoUsuario tipoUsuario, String nome) {
         this.codigo = codigo;
@@ -100,6 +101,18 @@ public class Usuario {
             }
         }
         return false;
+    }
+
+    public List<String> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void adicionarNotificacao(String notificacao) {
+        notificacoes.add(notificacao);
+    }
+
+    public void limparNotificacoes() {
+        notificacoes.clear();
     }
 
 
