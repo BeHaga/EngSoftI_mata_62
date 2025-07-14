@@ -36,9 +36,12 @@ public class ReservarCommand implements Command {
 
         Date data = new Date();
 
+        boolean verificar = usuario.temReserva(livro);
+
         if(usuario.quantidadeReservas() < 3){
 
-            if(!usuario.temReserva(livro) && livro.quantidadeExemplares() < livro.quantidadeExemplares()){
+
+            if((!verificar) && (livro.quantidadeReservas() < livro.quantidadeExemplares())){
 
                 Reserva reserva = new Reserva(usuario, livro, data);
 
@@ -53,7 +56,7 @@ public class ReservarCommand implements Command {
                 System.out.println("Livro: " + livro.getTitulo());
                 System.out.println("Data da reserva: " + data);  
 
-            } else if(usuario.temReserva(livro)) {
+            } else if(verificar) {
                 System.out.println("Reserva não realizada: Usuario já reservou esse livro");
             } else {
                 System.out.println("Reserva não realizada: Livro indisponivel");

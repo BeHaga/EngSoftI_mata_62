@@ -53,7 +53,7 @@ public class Livro {
     }
 
     public int quantidadeExemplares(){
-        return this.exemplares.size();
+        return exemplares.size();
     }
 
     public List<Reserva> getReservas() {
@@ -61,7 +61,7 @@ public class Livro {
     }
 
     public int quantidadeReservas(){
-        return this.reservas.size();
+        return reservas.size();
     }
 
     public void adicionarExemplar(Exemplar e) {
@@ -72,8 +72,13 @@ public class Livro {
       reservas.add(r);
     }
 
-    public void removerReserva(Reserva r) {
-        reservas.remove(r);
+    public void removerReserva(Livro livro) {
+        for (Reserva r : reservas) {
+            if (r.getLivro().getCodigo().equals(livro.getCodigo())) {
+                reservas.remove(r);
+                break;
+            }
+        }
     }
 
     public boolean temExemplarDisponivel() {

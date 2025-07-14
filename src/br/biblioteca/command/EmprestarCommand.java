@@ -7,7 +7,6 @@ import java.util.Date;
 public class EmprestarCommand implements Command {
     @Override
     public void executar(String[] args) {
-        System.out.println("DevolverCommand chamado!");
         
         if (args.length < 2) {
             System.out.println("Uso: emp <usuario> <livro>");
@@ -18,7 +17,9 @@ public class EmprestarCommand implements Command {
         String codLivro = args[1];
 
         Repositorio repo = Repositorio.getInstancia();
+
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
+
         if (usuario == null) {
             System.out.println("Usuário não encontrado.");
             return;
@@ -36,12 +37,14 @@ public class EmprestarCommand implements Command {
         }
 
         Livro livro = repo.buscarLivroPorCodigo(codLivro);
+
         if (livro == null) {
             System.out.println("Livro não encontrado.");
             return;
         }
 
         Exemplar exemplarDisponivel = livro.getPrimeiroExemplarDisponivel();
+        
         if (exemplarDisponivel == null) {
             System.out.println("Não há exemplares disponíveis deste livro para empréstimo.");
             return;
@@ -55,6 +58,9 @@ public class EmprestarCommand implements Command {
         exemplarDisponivel.setEmprestimo(emprestimo);
         usuario.adicionarEmprestimo(emprestimo);
         repo.adicionarEmprestimo(emprestimo);
+
+        usuario.removerReserva(livro);
+        livro.removerReserva(livro);
 
         System.out.println("Empréstimo realizado com sucesso!");
         System.out.println("Usuário: " + usuario.getNome());

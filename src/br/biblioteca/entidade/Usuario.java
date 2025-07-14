@@ -48,8 +48,13 @@ public class Usuario {
       reservas.add(r);
     }
 
-    public void removerReserva(Reserva r) {
-        reservas.remove(r);
+    public void removerReserva(Livro livro) {
+        for (Reserva r : reservas) {
+            if (r.getLivro().getCodigo().equals(livro.getCodigo())) {
+                reservas.remove(r);
+                break;
+            }
+        }
     }
 
     public int getLimiteEmprestimos() {
@@ -96,7 +101,7 @@ public class Usuario {
 
     public boolean temReserva(Livro livro){
         for (Reserva r : reservas) {
-            if (r.getLivro().equals(livro)) {
+            if (r.getLivro().getCodigo().equals(livro.getCodigo())) {
                 return true;
             }
         }
