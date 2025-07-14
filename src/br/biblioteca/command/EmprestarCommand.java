@@ -54,6 +54,20 @@ public class EmprestarCommand implements Command {
             return;
         }
 
+        boolean verificar = usuario.temReserva(livro);
+
+        if((usuario.getTipoUsuario() != TipoUsuario.PROFESSOR) &&(verificar==false) && (livro.quantidadeReservas() >= livro.quantidadeExemplares())){
+            console.mostrarMensagem("Todos os exemplares estão reservados");
+            return;
+        }
+
+        boolean verificarEmprestimo = usuario.verificarEmprestimo(livro);
+
+        if(verificarEmprestimo == true){
+            console.mostrarMensagem("O usuário já tem um exemplar deste mesmo livro em empréstimo.");
+            return;
+        }
+
         Date hoje = new Date();
         Date dataPrevistaDevolucao = Emprestimo.calcularDataPrevista(usuario, hoje);
         Emprestimo emprestimo = new Emprestimo(usuario, exemplarDisponivel, hoje, dataPrevistaDevolucao);

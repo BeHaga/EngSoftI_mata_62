@@ -57,6 +57,15 @@ public class Usuario {
         }
     }
 
+    public boolean verificarEmprestimo(Livro livro) {
+        for (Emprestimo e : emprestimosAtivos) {
+            if (e.getExemplar().getLivro().getCodigo().equals(livro.getCodigo())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getLimiteEmprestimos() {
         switch (tipoUsuario) {
             case ALUNO_GRADUACAO:
