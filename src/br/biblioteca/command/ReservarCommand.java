@@ -2,6 +2,7 @@ package br.biblioteca.command;
 
 import br.biblioteca.entidade.*;
 import br.biblioteca.repositorio.Repositorio;
+import br.biblioteca.console.LeituraEscrita;
 
 import java.util.Date;
 
@@ -9,8 +10,10 @@ public class ReservarCommand implements Command {
     @Override
     public void executar(String[] args) {
 
+        LeituraEscrita console = LeituraEscrita.getInstancia();
+
         if (args.length < 2) {
-            System.out.println("Uso: emp <usuario> <livro>");
+            console.mostrarMensagem("Uso: emp <usuario> <livro>");
             return;
         }
 
@@ -24,12 +27,12 @@ public class ReservarCommand implements Command {
         Usuario usuario = repo.buscarUsuarioPorCodigo(codigoUsuario);
 
         if (livro == null) {
-            System.out.println("Livro não encontrado.");
+            console.mostrarMensagem("Livro não encontrado.");
             return;
         }
 
         if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
+            console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
@@ -51,19 +54,19 @@ public class ReservarCommand implements Command {
 
                 usuario.adicionarNotificacao("Reserva do livro '" + livro.getTitulo() + "'realizada com sucesso.");
 
-                System.out.println("Reserva realizada com sucesso!");
-                System.out.println("Usuário: " + usuario.getNome());
-                System.out.println("Livro: " + livro.getTitulo());
-                System.out.println("Data da reserva: " + data);  
+                console.mostrarMensagem("Reserva realizada com sucesso!");
+                console.mostrarMensagem("Usuário: " + usuario.getNome());
+                console.mostrarMensagem("Livro: " + livro.getTitulo());
+                console.mostrarMensagem("Data da reserva: " + data);  
 
             } else if(verificar) {
-                System.out.println("Reserva não realizada: Usuario já reservou esse livro");
+                console.mostrarMensagem("Reserva não realizada: Usuario já reservou esse livro");
             } else {
-                System.out.println("Reserva não realizada: Livro indisponivel");
+                console.mostrarMensagem("Reserva não realizada: Livro indisponivel");
             }
 
         } else{
-            System.out.println("Reserva não realizada: Usuário já possui o limite de 3 reservas!");
+            console.mostrarMensagem("Reserva não realizada: Usuário já possui o limite de 3 reservas!");
         }
 
 

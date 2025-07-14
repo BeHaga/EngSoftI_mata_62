@@ -2,6 +2,7 @@ package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
 import br.biblioteca.entidade.*;
+import br.biblioteca.console.LeituraEscrita;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -9,10 +10,13 @@ import java.util.List;
 public class ConsultarUsuarioCommand implements Command {
     @Override
     public void executar(String[] args) {
-        System.out.println("ConsultarUsuarioCommand chamado!");
+
+        LeituraEscrita console = LeituraEscrita.getInstancia();
+        
+        console.mostrarMensagem("ConsultarUsuarioCommand chamado!");
         
         if (args.length < 1) {
-            System.out.println("Uso: usu <codigo_usuario>");
+            console.mostrarMensagem("Uso: usu <codigo_usuario>");
             return;
         }
 
@@ -21,24 +25,24 @@ public class ConsultarUsuarioCommand implements Command {
 
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
         if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
+            console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
-        System.out.println("===== Informações do Usuário =====");
-        System.out.println("Código: " + usuario.getCodigo());
-        System.out.println("Nome: " + usuario.getNome());
-        System.out.println("Tipo: " + usuario.getTipoUsuario());
-        System.out.println("----------------------------------");
+        console.mostrarMensagem("===== Informações do Usuário =====");
+        console.mostrarMensagem("Código: " + usuario.getCodigo());
+        console.mostrarMensagem("Nome: " + usuario.getNome());
+        console.mostrarMensagem("Tipo: " + usuario.getTipoUsuario());
+        console.mostrarMensagem("----------------------------------");
 
         List<Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
         if (emprestimos.isEmpty()) {
-            System.out.println("Nenhum empréstimo ativo.");
+            console.mostrarMensagem("Nenhum empréstimo ativo.");
         } else {
-            System.out.println("Empréstimos Ativos:");
+            console.mostrarMensagem("Empréstimos Ativos:");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             for (Emprestimo e : emprestimos) {
-                System.out.println("- Livro: " + e.getExemplar().getLivro().getTitulo() +
+                console.mostrarMensagem("- Livro: " + e.getExemplar().getLivro().getTitulo() +
                     " | Exemplar: " + e.getExemplar().getCodigo() +
                     " | Devolver até: " + sdf.format(e.getDataDevolucao()));
             }
@@ -46,14 +50,14 @@ public class ConsultarUsuarioCommand implements Command {
         
         List<Reserva> reservas = usuario.getReservas();
         if (reservas.isEmpty()) {
-            System.out.println("Nenhuma reserva ativa.");
+            console.mostrarMensagem("Nenhuma reserva ativa.");
         } else {
-            System.out.println("Reservas ativas:");
+            console.mostrarMensagem("Reservas ativas:");
             for (Reserva r : reservas) {
-                System.out.println("- Livro: " + r.getLivro().getTitulo() + 
+                console.mostrarMensagem("- Livro: " + r.getLivro().getTitulo() + 
                 " | Código: " + r.getLivro().getCodigo());
             }
         }
-        System.out.println("==================================");
+        console.mostrarMensagem("==================================");
     }
 }

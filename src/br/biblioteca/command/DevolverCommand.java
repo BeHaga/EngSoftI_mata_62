@@ -2,6 +2,7 @@ package br.biblioteca.command;
 
 import br.biblioteca.entidade.*;
 import br.biblioteca.repositorio.Repositorio;
+import br.biblioteca.console.LeituraEscrita;
 
 import java.util.Date;
 import java.util.List;
@@ -10,8 +11,10 @@ public class DevolverCommand implements Command {
     @Override
     public void executar(String[] args) {
 
+        LeituraEscrita console = LeituraEscrita.getInstancia();
+
         if (args.length < 2) {
-            System.out.println("Uso: emp <usuario> <livro>");
+            console.mostrarMensagem("Uso: emp <usuario> <livro>");
             return;
         }
         String codigoUsuario = args[0];
@@ -20,13 +23,13 @@ public class DevolverCommand implements Command {
         Repositorio repo = Repositorio.getInstancia();
         Usuario usuario = repo.buscarUsuarioPorCodigo(codigoUsuario);
         if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
+            console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
         Livro livro = repo.buscarLivroPorCodigo(codigoLivro);
         if (livro == null) {
-            System.out.println("Livro não encontrado.");
+            console.mostrarMensagem("Livro não encontrado.");
             return;
         }
 
@@ -42,7 +45,7 @@ public class DevolverCommand implements Command {
         }
 
         if (emprestimoParaDevolver == null) {
-            System.out.println("Nenhum empréstimo ativo deste livro encontrado.");
+            console.mostrarMensagem("Nenhum empréstimo ativo deste livro encontrado.");
             return;
         }
 
@@ -55,11 +58,11 @@ public class DevolverCommand implements Command {
 
         usuario.removerEmprestimo(emprestimoParaDevolver);
 
-        System.out.println("Devolução realizada com sucesso!");
-        System.out.println("Usuário: " + usuario.getNome());
-        System.out.println("Livro: " + livro.getTitulo());
-        System.out.println("Exemplar: " + exemplar.getCodigo());
-        System.out.println("Data de devolução: " + hoje);    
+        console.mostrarMensagem("Devolução realizada com sucesso!");
+        console.mostrarMensagem("Usuário: " + usuario.getNome());
+        console.mostrarMensagem("Livro: " + livro.getTitulo());
+        console.mostrarMensagem("Exemplar: " + exemplar.getCodigo());
+        console.mostrarMensagem("Data de devolução: " + hoje);    
 
         List<Reserva> reservas = livro.getReservas();
         if (!reservas.isEmpty()) {

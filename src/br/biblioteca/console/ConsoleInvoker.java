@@ -1,11 +1,15 @@
 package br.biblioteca.console;
 
 import br.biblioteca.command.Command;
+// import br.biblioteca.console.LeituraEscrita;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleInvoker {
+
+    LeituraEscrita console = LeituraEscrita.getInstancia();
 
     private Map<String, Command> comandos = new HashMap<>();
 
@@ -15,7 +19,7 @@ public class ConsoleInvoker {
 
     public void iniciar() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite um comando ou 'sair' para encerrar: ");
+        console.mostrarMensagem("Digite um comando ou 'sair' para encerrar: ");
 
         while (true) {
             System.out.print("> ");
@@ -34,7 +38,7 @@ public class ConsoleInvoker {
             if (comando != null) {
                 comando.executar(args);
             } else {
-                System.out.println("Comando desconhecido: " + comandoChave);
+                console.mostrarMensagem("Comando desconhecido: " + comandoChave);
             }
         }        
         scanner.close();

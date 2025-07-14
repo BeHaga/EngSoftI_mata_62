@@ -2,14 +2,18 @@ package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
 import br.biblioteca.entidade.*;
+import br.biblioteca.console.LeituraEscrita;
+
 import java.util.Date;
 
 public class EmprestarCommand implements Command {
     @Override
     public void executar(String[] args) {
+
+        LeituraEscrita console = LeituraEscrita.getInstancia();
         
         if (args.length < 2) {
-            System.out.println("Uso: emp <usuario> <livro>");
+            console.mostrarMensagem("Uso: emp <usuario> <livro>");
             return;
         }
 
@@ -21,32 +25,32 @@ public class EmprestarCommand implements Command {
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
 
         if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
+            console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
         if (usuario.isDevedor()) {
             usuario.adicionarNotificacao("Você possui empréstimos em atraso. Regularize para realizar novos empréstimos.");
-            System.out.println("Usuário possui empréstimos em atraso e não pode realizar novos empréstimos.");
+            console.mostrarMensagem("Usuário possui empréstimos em atraso e não pode realizar novos empréstimos.");
             return;
         }
 
         if (!usuario.podeEmprestar()) {
-            System.out.println("Usuário atingiu o limite de empréstimos");
+            console.mostrarMensagem("Usuário atingiu o limite de empréstimos");
             return;
         }
 
         Livro livro = repo.buscarLivroPorCodigo(codLivro);
 
         if (livro == null) {
-            System.out.println("Livro não encontrado.");
+            console.mostrarMensagem("Livro não encontrado.");
             return;
         }
 
         Exemplar exemplarDisponivel = livro.getPrimeiroExemplarDisponivel();
         
         if (exemplarDisponivel == null) {
-            System.out.println("Não há exemplares disponíveis deste livro para empréstimo.");
+            console.mostrarMensagem("Não há exemplares disponíveis deste livro para empréstimo.");
             return;
         }
 
@@ -62,10 +66,10 @@ public class EmprestarCommand implements Command {
         usuario.removerReserva(livro);
         livro.removerReserva(livro);
 
-        System.out.println("Empréstimo realizado com sucesso!");
-        System.out.println("Usuário: " + usuario.getNome());
-        System.out.println("Livro: " + livro.getTitulo());
-        System.out.println("Exemplar: " + exemplarDisponivel.getCodigo());
-        System.out.println("Data prevista de devolução: " + dataPrevistaDevolucao);
+        console.mostrarMensagem("Empréstimo realizado com sucesso!");
+        console.mostrarMensagem("Usuário: " + usuario.getNome());
+        console.mostrarMensagem("Livro: " + livro.getTitulo());
+        console.mostrarMensagem("Exemplar: " + exemplarDisponivel.getCodigo());
+        console.mostrarMensagem("Data prevista de devolução: " + dataPrevistaDevolucao);
     }
 }

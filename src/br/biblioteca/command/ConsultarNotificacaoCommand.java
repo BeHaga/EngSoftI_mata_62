@@ -2,16 +2,20 @@ package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
 import br.biblioteca.entidade.Usuario;
+import br.biblioteca.console.LeituraEscrita;
 
 import java.util.List;
 
 public class ConsultarNotificacaoCommand implements Command {
     @Override
     public void executar(String[] args) {
-        System.out.println("ConsultarNotificacaoCommand chamado!");
+
+        LeituraEscrita console = LeituraEscrita.getInstancia();
+
+        console.mostrarMensagem("ConsultarNotificacaoCommand chamado!");
         
         if (args.length < 1) {
-            System.out.println("Uso: ntf <codigo_usuario>");
+            console.mostrarMensagem("Uso: ntf <codigo_usuario>");
             return;
         }
 
@@ -20,23 +24,23 @@ public class ConsultarNotificacaoCommand implements Command {
 
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
         if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
+            console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
         List<String> notificacoes = usuario.getNotificacoes();
 
-        System.out.println("===== Notificações de " + usuario.getNome() + "=====");
+        console.mostrarMensagem("===== Notificações de " + usuario.getNome() + "=====");
 
         if (notificacoes.isEmpty()) {
-            System.out.println("Nenhuma notificação pendente.");
+            console.mostrarMensagem("Nenhuma notificação pendente.");
         } else {
             for (String n : notificacoes) {
-                System.out.println("- " + n);
+                console.mostrarMensagem("- " + n);
             }
             usuario.limparNotificacoes();
         }
         
-        System.out.println("=========================================");
+        console.mostrarMensagem("=========================================");
     }
 }
