@@ -3,7 +3,6 @@ package br.biblioteca.entidade;
 import java.util.Date;
 import java.util.Calendar;
 import br.biblioteca.entidade.Usuario;
-import br.biblioteca.entidade.TipoUsuario;
 
 public class Emprestimo{
 
@@ -11,11 +10,11 @@ public class Emprestimo{
     private Exemplar exemplar;
     private Date dataEmprestimo, dataDevolucao, dataDevolucaoEfetiva;
 
-    public Emprestimo(Usuario usuario, Exemplar exemplar, Date dataEmprestimo, Date dataDevolucao){
+    public Emprestimo(Usuario usuario, Exemplar exemplar, Date dataEmprestimo){
         this.usuario = usuario;
         this.exemplar = exemplar;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
+        this.dataDevolucao = new Date(dataEmprestimo.getTime() + (usuario.getPrazoDias() * 24 * 60 * 60 * 1000));
         dataDevolucaoEfetiva = null;
     }
 
@@ -48,26 +47,5 @@ public class Emprestimo{
         this.dataDevolucaoEfetiva = dataDevolucaoEfetiva;
     }
 
-    public static Date calcularDataPrevista(Usuario usuario, Date dataEmprestimo) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dataEmprestimo);
-
-        TipoUsuario tipo = usuario.getTipoUsuario();
-        switch (tipo) {
-            case ALUNO_GRADUACAO:
-                calendar.add(Calendar.DAY_OF_MONTH, 7);
-                break;
-            case ALUNO_POS:                
-                calendar.add(Calendar.DAY_OF_MONTH, 10);
-                break;
-            case PROFESSOR:                
-                calendar.add(Calendar.DAY_OF_MONTH, 15);
-                break;
-            default:                
-                calendar.add(Calendar.DAY_OF_MONTH, 7);
-        }
-
-        return calendar.getTime();
-    }
 
 }

@@ -35,10 +35,10 @@ public class Repositorio {
     }
 
     private void popularDados() {
-        usuarios.add(new Usuario("123", TipoUsuario.ALUNO_GRADUACAO, "João da Silva"));
-        usuarios.add(new Usuario("456", TipoUsuario.ALUNO_POS, "Luiz Fernando Rodrigues"));
-        usuarios.add(new Usuario("789", TipoUsuario.ALUNO_GRADUACAO, "Pedro Paulo"));
-        usuarios.add(new Usuario("100", TipoUsuario.PROFESSOR, "Carlos Lucena"));
+        usuarios.add(new Graduacao("123", "João da Silva"));
+        usuarios.add(new PosGraduacao("456", "Luiz Fernando Rodrigues"));
+        usuarios.add(new Graduacao("789", "Pedro Paulo"));
+        usuarios.add(new Professor("100", "Carlos Lucena"));
 
         Livro livro1 = new Livro("100", "Engenharia de Software", "Addison Wesley", "Ian Sommerville", "6", 2000);
         Livro livro2 = new Livro("101", "UML - Guia do Usuário", "Campus", "Grady Booch, James Rumbaugh, Ivar Jacobson", "7", 2000);

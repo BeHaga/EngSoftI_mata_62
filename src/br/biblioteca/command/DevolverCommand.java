@@ -53,6 +53,7 @@ public class DevolverCommand implements Command {
         emprestimoParaDevolver.setDataDevolucaoEfetiva(hoje);
 
         Exemplar exemplar = emprestimoParaDevolver.getExemplar();
+        
         exemplar.setStatus(StatusExemplar.DISPONIVEL);
         exemplar.setEmprestimo(null);
 
@@ -64,11 +65,5 @@ public class DevolverCommand implements Command {
         console.mostrarMensagem("Exemplar: " + exemplar.getCodigo());
         console.mostrarMensagem("Data de devolução: " + hoje);    
 
-        List<Reserva> reservas = livro.getReservas();
-        if (!reservas.isEmpty()) {
-            Reserva proximaReserva = reservas.get(0);
-            Usuario usuarioReservante = proximaReserva.getUsuario();
-            usuarioReservante.adicionarNotificacao("O livro '" + livro.getTitulo() + "' está disponível para retirada.");
-        }
     }
 }

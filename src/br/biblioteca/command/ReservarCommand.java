@@ -52,7 +52,9 @@ public class ReservarCommand implements Command {
 
                 livro.adicionarReserva(reserva);
 
-                usuario.adicionarNotificacao("Reserva do livro '" + livro.getTitulo() + "'realizada com sucesso.");
+                if(livro.quantidadeReservas() >= 2){
+                    livro.notificarObservadores();
+                }
 
                 console.mostrarMensagem("Reserva realizada com sucesso!");
                 console.mostrarMensagem("Usuário: " + usuario.getNome());

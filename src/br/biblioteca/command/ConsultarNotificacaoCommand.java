@@ -2,6 +2,7 @@ package br.biblioteca.command;
 
 import br.biblioteca.repositorio.Repositorio;
 import br.biblioteca.entidade.Usuario;
+import br.biblioteca.entidade.Observer;
 import br.biblioteca.console.LeituraEscrita;
 
 import java.util.List;
@@ -11,8 +12,6 @@ public class ConsultarNotificacaoCommand implements Command {
     public void executar(String[] args) {
 
         LeituraEscrita console = LeituraEscrita.getInstancia();
-
-        console.mostrarMensagem("ConsultarNotificacaoCommand chamado!");
         
         if (args.length < 1) {
             console.mostrarMensagem("Uso: ntf <codigo_usuario>");
@@ -20,25 +19,24 @@ public class ConsultarNotificacaoCommand implements Command {
         }
 
         String codUsuario = args[0];
+
         Repositorio repo = Repositorio.getInstancia();
 
         Usuario usuario = repo.buscarUsuarioPorCodigo(codUsuario);
+
         if (usuario == null) {
             console.mostrarMensagem("Usuário não encontrado.");
             return;
         }
 
-        List<String> notificacoes = usuario.getNotificacoes();
+        Observer observer = (Observer) usuario;
 
         console.mostrarMensagem("===== Notificações de " + usuario.getNome() + "=====");
 
-        if (notificacoes.isEmpty()) {
-            console.mostrarMensagem("Nenhuma notificação pendente.");
+        if (observer.getNotificacoes() == 0) {
+            console.mostrarMensagem("Zero livros notificados.");
         } else {
-            for (String n : notificacoes) {
-                console.mostrarMensagem("- " + n);
-            }
-            usuario.limparNotificacoes();
+            console.mostrarMensagem("Quantidade de livros notificados: " + observer.getNotificacoes());
         }
         
         console.mostrarMensagem("=========================================");

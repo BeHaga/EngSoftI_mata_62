@@ -12,6 +12,7 @@ public class Livro {
     private int anoPublicacao;
     private List<Exemplar> exemplares;
     private List<Reserva> reservas;
+    private List<Observer> observers;
 
     public Livro(String codigo, String titulo, String editora, String autores, String edicao, int anoPublicacao) {
         this.codigo = codigo;
@@ -22,6 +23,7 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
         this.exemplares = new ArrayList<>();
         this.reservas = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     public String getCodigo() {
@@ -106,6 +108,16 @@ public class Livro {
                 exemplar.devolver();
                 break;
             }
+        }
+    }
+
+    public void registrarObservador(Observer observer){
+        observers.add(observer);
+    }
+
+    public void notificarObservadores(){
+        if (this.quantidadeReservas()>=2){
+            observers.forEach(o -> o.adicionarNotificacao());
         }
     }
 

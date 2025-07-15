@@ -17,6 +17,7 @@ public class Main {
         invoker.registrarComando("liv", new ConsultarLivroCommand());
         invoker.registrarComando("usu", new ConsultarUsuarioCommand());
         invoker.registrarComando("ntf", new ConsultarNotificacaoCommand());
+        invoker.registrarComando("obs", new RegistrarObservadorCommand());
 
         console.mostrarMensagem("Funcionando!");
 

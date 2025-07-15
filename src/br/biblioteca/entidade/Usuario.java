@@ -6,16 +6,17 @@ import java.util.List;
 
 public class Usuario {
     private String codigo;
-    private TipoUsuario tipoUsuario;
     private String nome;
+    private int prazoDias;
+    private int limiteLivros;
     private List<Emprestimo> emprestimosAtivos;
     private List<Reserva> reservas;
-    private List<String> notificacoes = new ArrayList<>();
 
-    public Usuario(String codigo, TipoUsuario tipoUsuario, String nome) {
+    public Usuario(String codigo, String nome, int prazoDias, int limiteLivros) {
         this.codigo = codigo;
-        this.tipoUsuario = tipoUsuario;
         this.nome = nome;
+        this.prazoDias = prazoDias;
+        this.limiteLivros = limiteLivros; 
         this.emprestimosAtivos = new ArrayList<>();
         this.reservas = new ArrayList<>();
     }
@@ -24,12 +25,16 @@ public class Usuario {
         return codigo;
     }
 
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
     public String getNome() {
         return nome;
+    }
+
+    public int getPrazoDias(){
+        return prazoDias;
+    }
+
+    public int getLivros(){
+        return limiteLivros;
     }
 
     public List<Emprestimo> getEmprestimosAtivos() {
@@ -66,17 +71,8 @@ public class Usuario {
         return false;
     }
 
-    public int getLimiteEmprestimos() {
-        switch (tipoUsuario) {
-            case ALUNO_GRADUACAO:
-                return 2;
-            case ALUNO_POS:
-                return 3;
-            case PROFESSOR:
-                return Integer.MAX_VALUE;
-            default:
-                return 0;
-        }
+    public int getLimiteEmprestimos(){
+        return 0;
     }
 
     public boolean podeEmprestar() {
@@ -86,7 +82,7 @@ public class Usuario {
     public boolean isDevedor() {
         Date hoje = new Date();
         for (Emprestimo e : emprestimosAtivos) {
-            if (e.getDataDevolucaoEfetiva() == null && hoje.after(e.getDataDevolucao())) {
+            if ((e.getDataDevolucaoEfetiva() == null) && hoje.after(e.getDataDevolucao())) {
                 return true;
             }
         }
@@ -117,16 +113,12 @@ public class Usuario {
         return false;
     }
 
-    public List<String> getNotificacoes() {
-        return notificacoes;
+    public boolean podeIgnorarFilaDeReserva() {
+        return false;
     }
 
-    public void adicionarNotificacao(String notificacao) {
-        notificacoes.add(notificacao);
-    }
-
-    public void limparNotificacoes() {
-        notificacoes.clear();
+    public String getDescricaoTipo(){
+        return "";
     }
 
 

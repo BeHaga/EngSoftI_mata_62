@@ -13,8 +13,6 @@ public class ConsultarUsuarioCommand implements Command {
 
         LeituraEscrita console = LeituraEscrita.getInstancia();
         
-        console.mostrarMensagem("ConsultarUsuarioCommand chamado!");
-        
         if (args.length < 1) {
             console.mostrarMensagem("Uso: usu <codigo_usuario>");
             return;
@@ -32,7 +30,7 @@ public class ConsultarUsuarioCommand implements Command {
         console.mostrarMensagem("===== Informações do Usuário =====");
         console.mostrarMensagem("Código: " + usuario.getCodigo());
         console.mostrarMensagem("Nome: " + usuario.getNome());
-        console.mostrarMensagem("Tipo: " + usuario.getTipoUsuario());
+        console.mostrarMensagem("Tipo: " + usuario.getDescricaoTipo());
         console.mostrarMensagem("----------------------------------");
 
         List<Emprestimo> emprestimos = usuario.getEmprestimosAtivos();

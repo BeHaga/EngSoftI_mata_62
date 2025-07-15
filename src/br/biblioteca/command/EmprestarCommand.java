@@ -30,7 +30,6 @@ public class EmprestarCommand implements Command {
         }
 
         if (usuario.isDevedor()) {
-            usuario.adicionarNotificacao("Você possui empréstimos em atraso. Regularize para realizar novos empréstimos.");
             console.mostrarMensagem("Usuário possui empréstimos em atraso e não pode realizar novos empréstimos.");
             return;
         }
@@ -56,8 +55,8 @@ public class EmprestarCommand implements Command {
 
         boolean verificar = usuario.temReserva(livro);
 
-        if((usuario.getTipoUsuario() != TipoUsuario.PROFESSOR) &&(verificar==false) && (livro.quantidadeReservas() >= livro.quantidadeExemplares())){
-            console.mostrarMensagem("Todos os exemplares estão reservados");
+        if((usuario.podeIgnorarFilaDeReserva() == false) &&(verificar==false) && (livro.quantidadeReservas() >= livro.quantidadeExemplares())){
+            console.mostrarMensagem("Emprestimo não realizado: Todos os exemplares estão reservados");
             return;
         }
 
@@ -69,8 +68,7 @@ public class EmprestarCommand implements Command {
         }
 
         Date hoje = new Date();
-        Date dataPrevistaDevolucao = Emprestimo.calcularDataPrevista(usuario, hoje);
-        Emprestimo emprestimo = new Emprestimo(usuario, exemplarDisponivel, hoje, dataPrevistaDevolucao);
+        Emprestimo emprestimo = new Emprestimo(usuario, exemplarDisponivel, hoje);
 
         exemplarDisponivel.setStatus(StatusExemplar.EMPRESTADO);
         exemplarDisponivel.setEmprestimo(emprestimo);
@@ -84,6 +82,5 @@ public class EmprestarCommand implements Command {
         console.mostrarMensagem("Usuário: " + usuario.getNome());
         console.mostrarMensagem("Livro: " + livro.getTitulo());
         console.mostrarMensagem("Exemplar: " + exemplarDisponivel.getCodigo());
-        console.mostrarMensagem("Data prevista de devolução: " + dataPrevistaDevolucao);
     }
 }

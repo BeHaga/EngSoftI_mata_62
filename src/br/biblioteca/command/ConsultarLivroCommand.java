@@ -11,8 +11,6 @@ public class ConsultarLivroCommand implements Command {
     public void executar(String[] args) {
 
         LeituraEscrita console = LeituraEscrita.getInstancia();
-
-        console.mostrarMensagem("ConsultarLivroCommand chamado!");
         
         if (args.length < 1) {
             console.mostrarMensagem("Uso: liv <codigo_livro>");
