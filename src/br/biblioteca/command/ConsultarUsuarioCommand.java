@@ -34,6 +34,7 @@ public class ConsultarUsuarioCommand implements Command {
         console.mostrarMensagem("----------------------------------");
 
         List<Emprestimo> emprestimos = usuario.getEmprestimosAtivos();
+
         if (emprestimos.isEmpty()) {
             console.mostrarMensagem("Nenhum empréstimo ativo.");
         } else {
@@ -56,6 +57,22 @@ public class ConsultarUsuarioCommand implements Command {
                 " | Código: " + r.getLivro().getCodigo());
             }
         }
+
+
+        List<Emprestimo> emprestimosPassados = usuario.getEmprestimosPassados();
+        
+        if (emprestimosPassados.isEmpty()) {
+            console.mostrarMensagem("Nenhum histórico de empréstimos.");
+        } else {
+            console.mostrarMensagem("Histórico de empréstimos:");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            for (Emprestimo e : emprestimosPassados) {
+                console.mostrarMensagem("- Livro: " + e.getExemplar().getLivro().getTitulo() +
+                    " | Exemplar: " + e.getExemplar().getCodigo() +
+                    " | Devolveu em: " + sdf.format(e.getDataDevolucaoEfetiva()));
+            }
+        }
+
         console.mostrarMensagem("==================================");
     }
 }

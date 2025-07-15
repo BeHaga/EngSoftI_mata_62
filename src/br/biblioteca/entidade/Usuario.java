@@ -10,6 +10,7 @@ public class Usuario {
     private int prazoDias;
     private int limiteLivros;
     private List<Emprestimo> emprestimosAtivos;
+    private List<Emprestimo> emprestimosPassados;
     private List<Reserva> reservas;
 
     public Usuario(String codigo, String nome, int prazoDias, int limiteLivros) {
@@ -18,6 +19,7 @@ public class Usuario {
         this.prazoDias = prazoDias;
         this.limiteLivros = limiteLivros; 
         this.emprestimosAtivos = new ArrayList<>();
+        this.emprestimosPassados = new ArrayList<>();
         this.reservas = new ArrayList<>();
     }
 
@@ -39,6 +41,10 @@ public class Usuario {
 
     public List<Emprestimo> getEmprestimosAtivos() {
         return emprestimosAtivos;
+    }
+
+    public List<Emprestimo> getEmprestimosPassados() {
+        return emprestimosPassados;
     }
 
     public List<Reserva> getReservas() {
@@ -93,6 +99,7 @@ public class Usuario {
         
         for (Emprestimo emprestimo : emprestimosAtivos){
             if (emprestimo.equals(emprestimoAntigo)){
+                emprestimosPassados.add(emprestimo);
                 this.emprestimosAtivos.remove(emprestimo);
                 emprestimoAntigo.setDataDevolucaoEfetiva(new Date());
                 return;
